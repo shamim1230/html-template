@@ -1,0 +1,149 @@
+/* Reset and layout setup */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000; /* Black background for contrast */
+    font-family: Arial, sans-serif;
+}
+
+.loader-container {
+    text-align: center;
+    color: white;
+    position: relative;
+}
+
+/* Title styling */
+#title {
+    font-size: 12vh;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Subtitle styling */
+#subtitle {
+    font-size: 8vh;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Styling for individual letters */
+.text-part {
+    opacity: 0;
+    transform-origin: center;
+}
+
+/* Title zoom animation */
+#title .text-part {
+    animation: zoomBody 4s ease-in-out infinite;
+}
+
+@keyframes zoomBody {
+    0% {
+        opacity: 0;
+        transform: scale(3);
+    }
+    25% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+    75% {
+        opacity: 0.5;
+        transform: scale(0.5);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(3);
+    }
+}
+
+/* Subtitle glitch animation */
+#subtitle .text-part {
+    position: relative;
+    animation: glitch 2s infinite ease-in-out;
+}
+
+/* Delay glitch animation sequentially */
+#subtitle .text-part {
+    animation-delay: calc(var(--i) * 0.2s);
+}
+
+/* Keyframes for glitch effect */
+@keyframes glitch {
+    0% {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    20% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    30% {
+        transform: translateX(5px) skewX(10deg);
+    }
+    40% {
+        transform: translateX(-5px) skewX(-10deg);
+    }
+    50% {
+        transform: translateX(0);
+    }
+    70% {
+        opacity: 1;
+        transform: translateX(10px);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    #title {
+        font-size: 8vh;
+        letter-spacing: 8px;
+        gap: 10px;
+    }
+
+    #subtitle {
+        font-size: 5vh;
+        letter-spacing: 6px;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    #title {
+        font-size: 6vh;
+        letter-spacing: 6px;
+        gap: 8px;
+    }
+
+    #subtitle {
+        font-size: 4vh;
+        letter-spacing: 5px;
+        gap: 6px;
+    }
+}

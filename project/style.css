@@ -1,0 +1,107 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #1b1b1b;
+    color: #fff;
+}
+
+.navbar {
+    background-color: #0e0e0e;
+    border-bottom: 1px solid #333;
+    margin:auto;
+}
+
+.navbar .nav-link {
+    color: #ffffff;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.navbar .nav-link.active,
+.navbar .nav-link:hover {
+    color: #3902ff;
+}
+
+.navbar .text-primary {
+    color: #6c63ff !important;
+}
+
+
+.main-body{
+    padding-top: 40px;
+    padding-left: 40px;
+}
+
+.overview-card {
+    background: #292929;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 30%;
+    color: #fff;
+}
+
+.overview-card h6 {
+    font-size: 14px;
+    color: #bbb;
+}
+
+.overview-card h4 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+}
+.last{
+    background-color: rgb(166, 17, 196);
+}
+
+.card {
+    border-radius: 15px;
+}
+
+.calendar input {
+    border-radius: 5px;
+    padding: 10px;
+    border: none;
+}
+
+.reminder {
+    font-size: 14px;
+}
+
+.reminder span {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.btn-outline-light:hover {
+    background: #fff;
+    color: #000;
+}
+
+.btn-primary {
+    background-color: #6c63ff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #504db2;
+}
+
+
+
+.card-header {
+    background-color: transparent;
+    border-bottom: 1px solid #393948;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+  /* Card Body Centering */
+  .card-body {
+    display: flex;
+    justify-content: center;  /* Centers horizontally */
+    flex-direction: column;   /* Stack elements vertically */
+              
+}
+

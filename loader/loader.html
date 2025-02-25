@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter Body Zoom Animation</title>
+    <style>
+        /* Reset and layout setup */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+            /* Black background for contrast */
+            font-family: Arial, sans-serif;
+
+        }
+
+        .loader-container {
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        /* Full-screen letter styling */
+        #title {
+            font-size: 15vh;
+            /* Dynamically scale based on viewport width */
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            /* Space between letters */
+        }
+
+        /* Styling for individual letters */
+        .text-part {
+            opacity: 0;
+            animation: zoomBody 4s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        /* Animation delays for each letter */
+        #title .text-part {
+            animation-delay: calc(var(--i) * 0.3s);
+        }
+
+        /* Keyframes for zooming the letter body */
+        @keyframes zoomBody {
+            0% {
+                opacity: 0;
+                transform: scale(3);
+                /* Start large */
+            }
+
+            25% {
+                opacity: 1;
+                transform: scale(1);
+                /* Zoom to normal size */
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.1);
+                /* Slight pulse */
+            }
+
+            75% {
+                opacity: 0.5;
+                transform: scale(0.5);
+                /* Shrink before fading out */
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(3);
+                /* Return to large */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="loader-container">
+        <h1 id="title">
+            <span class="text-part">O</span>
+            <span class="text-part">S</span>
+            <span class="text-part">T</span>
+            <span class="text-part">A</span>
+            <span class="text-part">D</span>
+        </h1>
+        <h2 id="subtitle">
+            <span class="text-part">T</span>
+            <span class="text-part">E</span>
+            <span class="text-part">A</span>
+            <span class="text-part">M</span>
+            <span class="text-part">3</span>
+        </h2>
+    </div>
+
+    <script>
+        // Assign sequential delay to each letter
+        const titleParts = document.querySelectorAll("#title .text-part");
+
+        titleParts.forEach((part, index) => {
+            part.style.setProperty('--i', index); // Assign delay
+        });
+    </script>
+</body>
+
+</html>

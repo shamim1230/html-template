@@ -1,0 +1,22 @@
+.spendingchart {
+    color: #ffffff;
+    font-family: "Roboto", sans-serif;
+        border-radius: 15px;
+        padding: 20px;
+      }
+
+      .spendingchart-title {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+      }
+
+      .spendingchart-value {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+
+      canvas {
+        display: block;
+        max-height: 300px;
+      }

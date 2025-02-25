@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donut Chart with Flowbite</title>
+  <!-- Flowbite CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@1.6.4/dist/flowbite.min.css" rel="stylesheet" />
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 py-10">
+
+  <div class="container mx-auto px-4">
+
+    <h2 class="text-2xl font-semibold text-center mb-6">Device Usage - Donut Chart</h2>
+
+    <!-- Checkboxes to control data -->
+    <div class="flex justify-center space-x-4 mb-6">
+      <div>
+        <input type="checkbox" id="device1" class="mr-2" checked>
+        <label for="device1">Device 1</label>
+      </div>
+      <div>
+        <input type="checkbox" id="device2" class="mr-2" checked>
+        <label for="device2">Device 2</label>
+      </div>
+      <div>
+        <input type="checkbox" id="device3" class="mr-2" checked>
+        <label for="device3">Device 3</label>
+      </div>
+    </div>
+
+    <!-- Canvas for the chart -->
+    <canvas id="myDonutChart"></canvas>
+
+  </div>
+
+  <!-- Flowbite JS -->
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@1.6.4/dist/flowbite.min.js"></script>
+
+  <script>
+    // Donut chart data
+    const data = {
+      labels: ['Device 1', 'Device 2', 'Device 3'],
+      datasets: [{
+        data: [300, 500, 100],
+        backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe'],
+        hoverBackgroundColor: ['#ff6384', '#36a2eb', '#cc65fe'],
+      }]
+    };
+
+    // Create donut chart
+    const ctx = document.getElementById('myDonutChart').getContext('2d');
+    const myDonutChart = new Chart(ctx, {
+      type: 'doughnut', // donut chart
+      data: data,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          tooltip: {
+            enabled: true,
+          },
+        },
+        cutout: '70%', // Makes it a donut instead of a pie chart
+      }
+    });
+
+    // Function to update chart data based on checkbox selection
+    function updateChartData() {
+      const device1Checked = document.getElementById('device1').checked;
+      const device2Checked = document.getElementById('device2').checked;
+      const device3Checked = document.getElementById('device3').checked;
+
+      // Update dataset values based on checkbox states
+      const updatedData = [
+        device1Checked ? 300 : 0,
+        device2Checked ? 500 : 0,
+        device3Checked ? 100 : 0
+      ];
+
+      // Update the chart
+      myDonutChart.data.datasets[0].data = updatedData;
+      myDonutChart.update();
+    }
+
+    // Add event listeners to checkboxes to update chart when clicked
+    document.getElementById('device1').addEventListener('change', updateChartData);
+    document.getElementById('device2').addEventListener('change', updateChartData);
+    document.getElementById('device3').addEventListener('change', updateChartData);
+
+  </script>
+</body>
+</html>

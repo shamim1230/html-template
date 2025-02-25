@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SubTrackr - Expense Tracker</title>
+    <!-- Bootstrap 5 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"rel="stylesheet"/>
+    <!-- Custom CSS -->
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1b1b1b;
+            color: #fff;
+        }
+        
+        .navbar {
+            background-color: #0e0e0e;
+            border-bottom: 1px solid #333;
+            margin:auto;
+        }
+        
+        .navbar .nav-link {
+            color: #ffffff;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .navbar .nav-link.active,
+        .navbar .nav-link:hover {
+            color: #3902ff;
+        }
+        
+        .navbar .text-primary {
+            color: #6c63ff !important;
+        }
+        
+        .overview-card {
+            background: #292929;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 30%;
+            color: #fff;
+        }
+        
+        .overview-card h6 {
+            font-size: 14px;
+            color: #bbb;
+        }
+        
+        .overview-card h4 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #fff;
+        }
+        .last{
+            background-color: rgb(166, 17, 196);
+        }
+        
+        .card {
+            border-radius: 15px;
+        }
+        
+        .calendar input {
+            border-radius: 5px;
+            padding: 10px;
+            border: none;
+        }
+        
+        .reminder {
+            font-size: 14px;
+        }
+        
+        .reminder span {
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .btn-outline-light:hover {
+            background: #fff;
+            color: #000;
+        }
+        
+        .btn-primary {
+            background-color: #6c63ff;
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background-color: #504db2;
+        }
+        
+     
+        
+        .card-header {
+            background-color: transparent;
+            border-bottom: 1px solid #393948;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
+          /* Card Body Centering */
+          .card-body {
+            display: flex;
+            justify-content: center;  /* Centers horizontally */
+            flex-direction: column;   /* Stack elements vertically */
+                      
+        }
+
+        .chart-container {
+            position: relative;
+            height: 200px;
+            margin: auto;
+        }
+
+        /* Center text styling */
+        .chart-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* Legend Styling */
+        .legend {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 0 10px;
+            font-size: 14px;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            margin-right: 5px;
+            border-radius: 50%;
+        }
+
+        .legend-color.orange {
+            background-color: orange;
+        }
+
+        .legend-color.blue {
+            background-color: cornflowerblue;
+        }
+
+        /* Footer Styling */
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            color: #aaa;
+            font-size: 14px;
+        }
+
+
+
+        /*Right card Panel css*/
+        card-panel {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Roboto', sans-serif;
+          }
+          .card {
+            background-color: #1f1f1f;
+            border: none;
+            border-radius: 15px;
+          }
+          .card-title {
+            font-size: 1.2rem;
+          }
+          .card-text {
+            color: #a0a0a0;
+          }
+          .price-badge {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #007bff;
+            border-radius: 20px;
+            padding: 5px 15px;
+          }
+          .days-left {
+            color: #007bff;
+            font-weight: bold;
+          }
+
+
+
+
+
+
+
+        
+    
+          .spendingchart {
+        color: #ffffff;
+        font-family: "Roboto", sans-serif;
+            border-radius: 15px;
+            padding: 20px;
+          }
+    
+          .spendingchart-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+          }
+    
+          .spendingchart-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+          }
+    
+          canvas {
+            display: block;
+            max-height: 300px;
+          }
+    </style>
+</head>
+<body class="bg-dark text-white">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-black px-4">
+        <a class="navbar-brand fw-bold fs-4" href="#">Sub<span class="text-primary">Trackr</span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link active fs-5" href="#">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link fs-5" href="#">Settings</a></li>
+                <li class="nav-item"><a class="nav-link fs-5" href="#">Transactions</a></li>
+                <li class="nav-item"><a class="nav-link fs-5" href="#">My Subscriptions</a></li>
+            </ul>
+        </div>
+        <div class="d-flex align-items-center">
+            <img src="profile.jpg" alt="Profile" class="rounded-circle me-2" width="40">
+            <span>Dhruv Singh</span>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid py-4">
+        <div class="row g-4">
+            <!-- Left Panel -->
+             <!-- Expenses Overview -->
+            <div class="col-sm-5">
+                <div class="card bg-black">
+                     <div class="d-flex gap-2 mt-3 p-3 ms-10">
+                        <div class=" col md-6 justify-content-left text-light"><h1 >Expenses Overview</h1></div>
+                        <div><button class="btn btn-outline-light">Change Plans</button>
+                        <button class="btn btn-primary">Add Subscription +</button>
+                    </div>
+                </div>
+                 <div class="card-body ">   
+                <div class="d-flex justify-content-between flex-wrap">
+                    <div class="overview-card bg-primary">
+                        <h6>Your Balance</h6>
+                        <h4>₹ 2600/-</h4>
+                    </div>
+                    <div class="overview-card last">
+                        <h6>Last 6 Months</h6>
+                        <h4>₹ 48000/-</h4>
+                    </div>
+                    <div class="overview-card">
+                        <h6>Per Month</h6>
+                        <h4>₹ 8000/-</h4>
+                    </div>
+                   
+                </div>
+            </div>
+            </div>
+            </div>
+            
+            <!-- Right Panel -->
+            <div class="col-sm-4">
+            <div class="container">
+                <div class="row ">
+                    <!-- Card for Chart -->
+                    <div class="col-md-6">
+                        <div class="card bg-black text-light">
+                            <div class="card-body">
+                                <!-- <div class="card-header">Subscription Overview</div> -->
+                                <!-- Chart with Total Subscriptions Text -->
+                                <div class="chart-container">
+                                    <canvas id="myChart" width="300" height="300" style="display: block; box-sizing: border-box; height: 200px; width: 200px;"></canvas>
+                                    <div class="chart-text">Total : 5</div>
+                                </div>
+                                <div class="legend">
+                                    <div class="legend-item">
+                                        <span class="legend-color orange"></span> Inactive
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-color blue"></span> Active
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+               </div>
+<div class="col-lg-2">
+    
+    <div class="card bg-black mt-4 p-3">
+        <h6 class="text-light">Schedule Payment</h6>
+        <div class="calendar">
+            <input type="date" class="form-control bg-light ">
+        </div>
+    </div>
+</div>
+  <!-- chart dashboard -->
+  <div class="col-sm-7">
+    <div class="card spendingchart bg-black">
+     <div class="card-body">
+                <div class="card bg-black mt-3 p-3">
+      <div class="spendingchart-title">Per month expenditure<div class="d-flex justify-content-end mb-3">
+        <button class="btn btn-outline-light me-2">W</button>
+        <button class="btn btn-primary me-2">M</button>
+        <button class="btn btn-outline-light">Y</button>
+    </div></div>
+      <div class="spendingchart-value">₹ 8000/-</div>
+      
+      <canvas id="monthlyExpenditureChart"></canvas>
+    </div>
+  </div>
+    </div>
+  </div>
+        <!-- Right card Panel -->
+        <div class="col-sm-5 d-flex card-panel">
+        <div class="container py-10 justify-content-center">
+            <h3 class="mb-4">Upcoming reminders</h3>
+            <div class="row">
+              <!-- Reminder Card 1 -->
+              <div class="col-sm-3"></div>
+              <div class="col-sm-9 mt-3 p-3">
+                <div class="col-lg-6">
+                <div class="card p-0 d-flex flex-row align-items-center justify-content-between">
+                  <div class="d-flex align-items-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft Logo" style="width: 50px; height: 50px; margin-right: 15px;">
+                    <div>
+                      <h5 class="card-title mb-1">Microsoft</h5>
+                      <p class="card-text mb-0">Premium plan</p>
+                      <p class="card-text mb-0">Expires on: <strong>10 Apr</strong></p>
+                      <p class="card-text mb-0"><span class="days-left">03</span> Days left</p>
+                    </div>
+                  </div>
+                  <span class="price-badge">₹ 999/-</span>
+                </div>
+              </div>
+            </div>
+              <!-- Reminder Card 2 -->
+              <div class="col-sm-3"></div>
+              <div class="col-sm-9 mt-3 p-3">
+                <div class="col-lg-6">
+                <div class="card p-0 d-flex flex-row align-items-center justify-content-between">
+                  <div class="d-flex align-items-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn Logo" style="width: 50px; height: 50px; margin-right: 15px;">
+                    <div>
+                      <h5 class="card-title mb-1">LinkedIn</h5>
+                      <p class="card-text mb-0">Premium plan</p>
+                      <p class="card-text mb-0">Expires on: <strong>10 Apr</strong></p>
+                      <p class="card-text mb-0"><span class="days-left">03</span> Days left</p>
+                    </div>
+                  </div>
+                  <span class="price-badge">₹ 999/-</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+
+</div>
+   </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+     <!-- Chart.js -->
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+     <script>
+         const rdx = document.getElementById('myChart').getContext('2d');
+         const myChart = new Chart(rdx, {
+             type: 'doughnut',
+             data: {
+                 labels: ['Inactive', 'Active'],
+                 datasets: [{
+                     label: 'Subscriptions',
+                     data: [1, 4],
+                     backgroundColor: ['orange', 'cornflowerblue'],
+                     borderColor: ['orange', 'cornflowerblue'],
+                     borderWidth: 1
+                 }]
+             },
+             options: {
+                 responsive: true,
+                 plugins: {
+                     legend: {
+                         display: false
+                     },
+                     tooltip: {
+                         callbacks: {
+                             label: function (context) {
+                                 return `${context.label}: ${context.raw}`;
+                             }
+                         }
+                     }
+                 }
+             }
+         });
+     </script>
+    <script src="script.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Get the context of the canvas
+        const rat = document
+          .getElementById("monthlyExpenditureChart")
+          .getContext("2d");
+  
+        // Data for the chart
+        const data = {
+          labels: [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+          ],
+          datasets: [
+            // Primary Wave (weekly)
+            {
+              label: "weekly",
+              data: [
+                2000, 5000, 3500, 4000, 9000, 8000, 7500, 6500, 7000, 8500, 9000,
+                8000,
+              ],
+              borderColor: "#ff00ff",
+              backgroundColor: "rgba(255, 0, 255, 0.1)",
+              borderWidth: 10,
+              tension: 0.4, // Smooth curve
+              pointBackgroundColor: "#c705f2",
+              pointBorderColor: "#ffffff",
+              pointBorderWidth: 4,
+              pointRadius: 6,
+              pointHoverRadius: 8,
+            },
+            // Crossing Wave (Monthly with 20px Gap)
+            {
+              label: "monthly ",
+              data: [
+                1000, 4420, 4500, 3920, 7500, 7500, 1800, 5000, 6500, 8000, 8220,
+                3000,
+              ], // Values offset by 20px lower than "monthly grow"
+              borderColor: "#00ffff",
+              backgroundColor: "rgba(0, 255, 255, 0.1)",
+              borderWidth: 10,
+              tension: 0.4, // Smooth curve
+              pointBackgroundColor: "#00ffff",
+              pointBorderColor: "#ffffff",
+              pointBorderWidth: 6,
+              pointRadius: 6,
+              pointHoverRadius: 8,
+            },
+          ],
+        };
+  
+        // Chart configuration
+        const config = {
+          type: "line",
+          data: data,
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                display: false, // Hides the legend
+              },
+            },
+            scales: {
+              x: {
+                ticks: {
+                  color: "#a0a0a0",
+                  font: {
+                    size: 12,
+                  },
+                },
+                grid: {
+                  display: false,
+                },
+              },
+              y: {
+                ticks: {
+                  color: "#a0a0a0",
+                  font: {
+                    size: 12,
+                  },
+                },
+                grid: {
+                  color: "#2a2a2a",
+                },
+              },
+            },
+            animation: {
+              duration: 2000, // Smooth animation
+              easing: "easeInOutCubic",
+            },
+          },
+        };
+  
+        // Create the chart
+        new Chart(rat, config);
+      </script>
+  
+      
+</body>
+</html>

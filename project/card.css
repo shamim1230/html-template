@@ -1,0 +1,87 @@
+.card-panel {
+  border-radius: 8px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+  font-weight: bold;
+  color: #333;
+}
+
+.card {
+  border: none;
+  border-radius: 10px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.reminder-logo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.price-badge {
+  font-weight: bold;
+  color: #28a745;
+  font-size: 1.2rem;
+}
+
+.days-left {
+  color: #dc3545;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+@media (max-width: 576px) {
+  .card-panel {
+      padding: 1rem;
+  }
+
+  .reminder-logo {
+      width: 40px;
+      height: 40px;
+  }
+
+  .price-badge {
+      font-size: 1rem;
+  }
+}
+
+
+  /*calender*/
+  .card-header {
+    background-color: transparent;
+    border-bottom: none;
+}
+
+.btn-toggle {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.btn-toggle svg {
+    transition: transform 0.3s ease;
+}
+
+.collapse:not(.show) ~ .btn-toggle svg {
+    transform: rotate(180deg);
+}
+
+.card {
+    border: 1px solid #444;
+    border-radius: 8px;
+}
+
+.btn-toggle svg {
+  transition: transform 0.3s ease;
+}
+
+.btn-toggle[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
